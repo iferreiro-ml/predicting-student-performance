@@ -1,0 +1,35 @@
+# Here you can define all your data sets by using simple YAML syntax.
+#
+# Documentation for this file format can be found in "The Data Catalog"
+# Link: https://kedro.readthedocs.io/en/stable/data/data_catalog.html
+train:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/train.csv
+  load_args:
+    usecols: [session_id, index, elapsed_time, event_name, name, level, page,
+              room_coor_x, room_coor_y, screen_coor_x, screen_coor_y, hover_duration,
+              text, fqid, room_fqid, text_fqid, level_group] # Ignore empty fullscreen, hq and music columns
+
+sample_submission:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/sample_submission.csv
+
+train_labels:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/train_labels.csv
+
+test:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/test.csv
+  load_args:
+    usecols: [session_id, index, elapsed_time, event_name, name, level, page,
+              room_coor_x, room_coor_y, screen_coor_x, screen_coor_y, hover_duration,
+              text, fqid, room_fqid, text_fqid, level_group] # Ignore empty fullscreen, hq and music columns
+
+light_train:
+  type: pickle.PickleDataSet
+  filepath: data/02_intermediate/light_train.pkl
+
+light_test:
+  type: pickle.PickleDataSet
+  filepath: data/02_intermediate/light_test.pkl
