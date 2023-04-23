@@ -1,15 +1,13 @@
 # Pipeline design
 ```mermaid
 flowchart TB
-    subgraph Reduce Memory Usage
+    subgraph Ingestion
         id[(train)]-->reduce_memory_usage
         id2[(test)]-->reduce_memory_usage
         id30[(test_prd)]-.->reduce_memory_usage
         reduce_memory_usage --> id1[(light_train)]
         reduce_memory_usage --> id3[(light_test)]
         reduce_memory_usage -.->id31[(light_prd)]
-    end
-    subgraph Ingestion
         id4[(labels)]-->question_split
         id31[(light_prd)] -.-> time_diff_def
         id1[(light_train)]-->time_diff_def
