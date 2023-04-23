@@ -33,3 +33,7 @@ light_train:
 light_test:
   type: pickle.PickleDataSet
   filepath: data/02_intermediate/light_test.pkl
+
+lk_question:
+  type: pickle.PickleDataSet
+  filepath: data/01_raw/lk_question.pkl

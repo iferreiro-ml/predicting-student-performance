@@ -5,7 +5,7 @@ from xgboost import XGBClassifier
 from sklearn.metrics import f1_score
 import os
 import gc
-def reduce_memory_usage(df):
+def reduce_memory_usage(df: pd.DataFrame) -> pd.DataFrame:
     
     start_mem = df.memory_usage().sum() / 1024**2
     print('BEFORE: Memory usage of dataframe is {:.2f} MB'.format(start_mem))
