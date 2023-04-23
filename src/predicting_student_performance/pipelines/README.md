@@ -4,18 +4,21 @@ flowchart TB
     subgraph Reduce Memory Usage
         id[(train)]-->reduce_memory_usage
         id2[(test)]-->reduce_memory_usage
-        reduce_memory_usage-->id1[(light_train)]
-        reduce_memory_usage-->id3[(light_test)]
+        id30[(test_prd)]-.->reduce_memory_usage
+        reduce_memory_usage --> id1[(light_train)]
+        reduce_memory_usage --> id3[(light_test)]
+        reduce_memory_usage -.->id31[(light_prd)]
     end
     subgraph Ingestion
         id4[(labels)]-->question_split
+        id31[(light_prd)] -.-> time_diff_def
         id1[(light_train)]-->time_diff_def
         question_split-->id5[(labels_q)]
-        time_diff_def-->id6[(events)]
+        time_diff_def-.->id6[(events)]
     end
     subgraph Feature Engineering
-        id6[(events)] --> feature_engineering
-        feature_engineering --> id7[(model_input)]
+        id6[(events)] -.-> feature_engineering
+        feature_engineering -.-> id7[(model_input)]
     end
     subgraph Split data
         id7[(model_input)] --> split_data
@@ -37,6 +40,11 @@ flowchart TB
         scaling --> id15[\scaler/]
         scaling --> id18[(X_train)]
     end
+    subgraph Normalization prd data
+        id7[(model_input)] -.-> prd_norm
+        id15[\scaler/] -.-> prd_norm
+        prd_norm -.-> id32[(X)]
+    end
     subgraph Model train
         id19[\clf/] --> model_train
         id18[(X_train)] --> model_train
@@ -53,11 +61,15 @@ flowchart TB
     subgraph Predict
         id19[\clf/] --> predict
         id20[(X_test)] --> predict
-        predict --> id22[(y_pred)]
+        id32[(X)] -.-> predict
+        predict -.-> id22[(y_pred)]
     end
     subgraph Test evaluation
         id21[(y_test)] --> evaluate
         id22[(y_pred)] --> evaluate
         evaluate --> id23[(report)]
+    end
+    subgraph Submission
+        id22[(y_pred)] -.-> submit
     end
 ```
