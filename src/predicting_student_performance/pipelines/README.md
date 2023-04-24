@@ -12,34 +12,39 @@ flowchart TB
         id31[(light_prd)] -.-> time_diff_def
         id1[(light_train)]-->time_diff_def
         question_split-->id5[(labels_q)]
-        time_diff_def-.->id6[(events)]
-    end
-    subgraph Feature Engineering
-        id6[(events)] -.-> feature_engineering
-        feature_engineering -.-> id7[(model_input)]
+        time_diff_def -.-> id60[(events_prd)]
+        time_diff_def --> id6[(events_train)]
     end
     subgraph Split data
-        id7[(model_input)] --> split_data
+        id6[(events_train)] --> split_data
         id5[(labels_q)] --> split_data
         id8((seed)) --> split_data
         id9((test_size)) --> split_data
         split_data --> id10[(train_data)]
-        split_data --> id11[(train_labels)]
+        split_data --> id11[(labels_q_train)]
         split_data --> id12[(test_data)]
-        split_data --> id13[(test_labels)]
+        split_data --> id13[(labels_q_test)]
+    end
+    subgraph Feature Engineering
+        id10[(train_data)] --> feature_engineering_by_question
+        id12[(test_data)] --> feature_engineering_by_question
+        id60[(events_prd)] -.-> feature_engineering_by_question
+        feature_engineering_by_question -.-> id70[(features_q_prd)]
+        feature_engineering_by_question --> id7[(features_q_train)]
+        feature_engineering_by_question --> id71[(features_q_test)]
     end
     subgraph Normalization train data
-        id10[(train_data)] --> resampling
-        id11[(train_labels)] --> resampling
-        id14((res_seed)) --> resampling
-        resampling --> id16[(unscaled_X_train)]
-        resampling --> id17[(y_train)]
+        id7[(features_q_train)] --> upsampling
+        id11[(train_labels_q)] --> upsampling
+        id14((ups_seed)) --> upsampling
+        upsampling --> id16[(unscaled_X_train)]
+        upsampling --> id17[(y_train)]
         id16[(unscaled_X_train)] --> scaling
         scaling --> id15[\scaler/]
         scaling --> id18[(X_train)]
     end
     subgraph Normalization prd data
-        id7[(model_input)] -.-> prd_norm
+        id70[(features_q_prd)] -.-> prd_norm
         id15[\scaler/] -.-> prd_norm
         prd_norm -.-> id32[(X)]
     end
