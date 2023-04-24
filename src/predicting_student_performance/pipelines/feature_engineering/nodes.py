@@ -13,15 +13,15 @@ def _level_time_by_session(df):
             features_df[l] = 0
     return features_df
 
-def feature_engineering_by_question(train: pd.DataFrame, labels_q: pd.DataFrame, lk_question: pd.DataFrame) -> list:
+def feature_engineering_by_question(train: pd.DataFrame, lk_question: pd.DataFrame) -> list:
     
-    primary_q = []
-    q_i, q_e = (labels_q['question'].min(), labels_q['question'].max()+1)
+    features_q = []
+    level_groups = train['level_group'].drop_duplicates().to_list()
+    questions = lk_question[lk_question['level_group'].isin(level_groups)].index.to_list()
 
-    for q in range(q_i, q_e):
+    for q in questions:
         level_group = lk_question.loc[q,'level_group']
         train_level = train[train['level_group'] == level_group]
-        labels = labels_q[labels_q['question'] == q].drop('question', axis = 1)
-        primary_q.append(_level_time_by_session(train_level).merge(labels, on = 'session_id'))
+        features_q.append(_level_time_by_session(train_level))
 
-    return primary_q
+    return features_q

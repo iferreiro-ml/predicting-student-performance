@@ -8,7 +8,8 @@ from kedro.pipeline.modular_pipeline import pipeline
 
 from ...nodes.time_diff_def import time_diff_def
 from ...nodes.reduce_memory_usage import reduce_memory_usage
-from .nodes import question_split
+from ...nodes.question_split import question_split
+from .nodes import jo_train_test_split
 
 def new_rmu_pipeline(namespace: str = "train") -> Pipeline:
     """rmu stands for "reduce memory usage"
@@ -64,6 +65,19 @@ def new_qs_pipeline() -> Pipeline:
                 inputs="train_labels",
                 outputs="labels_q",
                 name="question_split",
+            ),
+        ]
+    )
+
+
+def new_split_pipeline() -> Pipeline:
+    return pipeline(
+        [
+            node(
+                func=jo_train_test_split,
+                inputs=["events_train", "labels_q", "params:split_options"],
+                outputs=["train_data", "labels_q_train", "test_data", "labels_q_test"],
+                name="train_test_split",
             ),
         ]
     )

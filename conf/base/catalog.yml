@@ -26,6 +26,10 @@ test:
               room_coor_x, room_coor_y, screen_coor_x, screen_coor_y, hover_duration,
               text, fqid, room_fqid, text_fqid, level_group] # Ignore empty fullscreen, hq and music columns
 
+lk_question:
+  type: pickle.PickleDataSet
+  filepath: data/01_raw/lk_question.pkl
+
 light_train:
   type: pickle.PickleDataSet
   filepath: data/02_intermediate/light_train.pkl
@@ -34,6 +38,22 @@ light_test:
   type: pickle.PickleDataSet
   filepath: data/02_intermediate/light_test.pkl
 
-lk_question:
+train_data:
   type: pickle.PickleDataSet
-  filepath: data/01_raw/lk_question.pkl
+  filepath: data/03_primary/train_data.pkl
+
+labels_q_train:
+  type: pickle.PickleDataSet
+  filepath: data/03_primary/labels_q_train.pkl
+
+test_data:
+  type: pickle.PickleDataSet
+  filepath: data/03_primary/test_data.pkl
+
+labels_q_test:
+  type: pickle.PickleDataSet
+  filepath: data/03_primary/labels_q_test.pkl
+
+features_q_train:
+  type: pickle.PickleDataSet
+  filepath: data/04_feature/features_q_train.pkl
