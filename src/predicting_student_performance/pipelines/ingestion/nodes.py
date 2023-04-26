@@ -21,7 +21,7 @@ def _labels_q_list(df: pd.DataFrame) -> list:
     question_list = list(df['question'].unique())
     labels_q = []
     for q in question_list:
-        labels_q.append(df[df['question'] == q])
+        labels_q.append(df[df['question'] == q].drop('question', axis = 1))
     return labels_q
 
 def jo_train_test_split(train: pd.DataFrame , labels_q: pd.DataFrame, split_options: dict) -> tuple[pd.DataFrame, list, pd.DataFrame, list]:
