@@ -4,7 +4,7 @@ generated using Kedro 0.18.6
 """
 
 from kedro.pipeline import Pipeline, node, pipeline
-from .nodes import upsample_minority_class, df_to_numpy, create_scaler, train_clf, classify
+from .nodes import upsample_minority_class, df_to_numpy, create_scaler, train_clf, scale, classify
 
 def create_train_pipeline(**kwargs) -> Pipeline:
     return pipeline(
@@ -31,7 +31,7 @@ def create_train_pipeline(**kwargs) -> Pipeline:
                 func=create_scaler,
                 inputs="unscaled_X_train",
                 outputs=["X_train", "scaler"],
-                name="scale",
+                name="scale_train",
             ),
             node(
                 func=train_clf,
@@ -48,7 +48,7 @@ def create_predict_pipeline(**kwargs) -> Pipeline:
             node(
                 func=df_to_numpy,
                 inputs="features_q_test",
-                outputs="X_test",
+                outputs="unscaled_X_test",
                 name="features_test_to_numpy",
             ),
             node(
@@ -56,6 +56,12 @@ def create_predict_pipeline(**kwargs) -> Pipeline:
                 inputs="labels_q_test",
                 outputs="y_test",
                 name="labels_test_to_numpy",
+            ),
+            node(
+                func=scale,
+                inputs=["unscaled_X_test", "scaler"],
+                outputs="X_test",
+                name="scale_test",
             ),
             node(
                 func=classify,

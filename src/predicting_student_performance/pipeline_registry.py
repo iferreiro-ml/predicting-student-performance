@@ -31,7 +31,7 @@ def register_pipelines() -> Dict[str, Pipeline]:
         "ing_without_rmu": train_event_features_pipeline + question_split_pipeline + train_test_split_pipeline,
         "full_ingestion": train_rmu_pipeline + test_rmu_pipeline + train_event_features_pipeline + question_split_pipeline + train_test_split_pipeline,
         "__default__": train_rmu_pipeline + test_rmu_pipeline + train_event_features_pipeline + question_split_pipeline + train_test_split_pipeline +
-        train_fe_pipeline + test_fe_pipeline + train_pipeline + predict_pipeline,
+        train_fe_pipeline + test_fe_pipeline + train_pipeline + predict_pipeline + report_pipeline,
         "train_e2e": train_event_features_pipeline + question_split_pipeline + train_test_split_pipeline + train_fe_pipeline + test_fe_pipeline + train_pipeline,
         "modelling": train_pipeline + predict_pipeline,
         "reporting": report_pipeline

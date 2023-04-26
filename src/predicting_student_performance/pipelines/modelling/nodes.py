@@ -61,7 +61,13 @@ def train_clf(X_train, y_train) -> list:
         clf_q = LogisticRegressionCV()
         clf.append(clf_q.fit(X_train[q], y_train[q].ravel()))
     return clf
-    
+
+def scale(unscaled_X_test: list, scaler: list) -> list:
+    X_test = []
+    for q in range (0, len(unscaled_X_test)):
+        X_test.append(scaler[q].transform(unscaled_X_test[q]))
+    return X_test
+
 def classify(X_test, clf) -> list:
     y_pred = []
     for  q in range (0, len(X_test)):
