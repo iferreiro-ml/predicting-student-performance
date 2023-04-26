@@ -24,7 +24,7 @@ def new_rmu_pipeline(namespace: str = "train") -> Pipeline:
                 func=reduce_memory_usage,
                 inputs="event_data",
                 outputs="light_event_data",
-                name="rmu_node",
+                name=f"{namespace}_rmu_node",
             ),
         ]
     )
@@ -33,7 +33,7 @@ def new_rmu_pipeline(namespace: str = "train") -> Pipeline:
         pipe=rmu_pipeline,
         namespace=f"{namespace}",
         inputs={"event_data": f"{namespace}"},
-        outputs={"light_event_data": f"light_{namespace}"},
+        outputs={"light_event_data": f"light_{namespace}"}
     )
 
 def new_event_features_pipeline(namespace: str = "train", **kwargs) -> Pipeline:
@@ -45,7 +45,7 @@ def new_event_features_pipeline(namespace: str = "train", **kwargs) -> Pipeline:
                 func=time_diff_def,
                 inputs="light_event_data",
                 outputs="events",
-                name="time_diffs",
+                name=f"{namespace}_time_diffs",
             ),
         ]
     )

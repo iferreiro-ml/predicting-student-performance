@@ -57,3 +57,39 @@ labels_q_test:
 features_q_train:
   type: pickle.PickleDataSet
   filepath: data/04_feature/features_q_train.pkl
+
+features_q_test:
+  type: pickle.PickleDataSet
+  filepath: data/04_feature/features_q_test.pkl
+
+y_train:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/y_train.pkl
+
+X_train:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/X_train.pkl
+
+y_test:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/y_test.pkl
+
+X_test:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/X_test.pkl
+
+scaler:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/scaler.pkl
+
+clf:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/clf.pkl
+
+y_pred:
+  type: pickle.PickleDataSet
+  filepath: data/07_model_output/y_pred.pkl
+
+op_table:
+  type: plotly.JSONDataSet
+  filepath: data/08_reporting/overall_performance_table.json
