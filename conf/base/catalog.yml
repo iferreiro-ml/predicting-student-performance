@@ -9,14 +9,17 @@ train:
     usecols: [session_id, index, elapsed_time, event_name, name, level, page,
               room_coor_x, room_coor_y, screen_coor_x, screen_coor_y, hover_duration,
               text, fqid, room_fqid, text_fqid, level_group] # Ignore empty fullscreen, hq and music columns
+  layer: raw
 
 sample_submission:
   type: pandas.CSVDataSet
   filepath: data/01_raw/sample_submission.csv
+  layer: raw
 
 train_labels:
   type: pandas.CSVDataSet
   filepath: data/01_raw/train_labels.csv
+  layer: raw
 
 test:
   type: pandas.CSVDataSet
@@ -25,71 +28,109 @@ test:
     usecols: [session_id, index, elapsed_time, event_name, name, level, page,
               room_coor_x, room_coor_y, screen_coor_x, screen_coor_y, hover_duration,
               text, fqid, room_fqid, text_fqid, level_group] # Ignore empty fullscreen, hq and music columns
+  layer: raw
 
 lk_question:
   type: pickle.PickleDataSet
   filepath: data/01_raw/lk_question.pkl
+  layer: raw
 
 light_train:
   type: pickle.PickleDataSet
   filepath: data/02_intermediate/light_train.pkl
+  layer: intermediate
 
 light_test:
   type: pickle.PickleDataSet
   filepath: data/02_intermediate/light_test.pkl
+  layer: intermediate
 
-train_data:
+train.events_data:
   type: pickle.PickleDataSet
   filepath: data/03_primary/train_data.pkl
+  layer: primary
 
-labels_q_train:
+train.labels_q:
   type: pickle.PickleDataSet
   filepath: data/03_primary/labels_q_train.pkl
+  layer: primary
 
-test_data:
+test.events_data:
   type: pickle.PickleDataSet
   filepath: data/03_primary/test_data.pkl
+  layer: primary
 
-labels_q_test:
+test.labels_q:
   type: pickle.PickleDataSet
   filepath: data/03_primary/labels_q_test.pkl
+  layer: primary
 
-features_q_train:
+train.features_q:
   type: pickle.PickleDataSet
   filepath: data/04_feature/features_q_train.pkl
+  layer: feature
 
-features_q_test:
+test.features_q:
   type: pickle.PickleDataSet
   filepath: data/04_feature/features_q_test.pkl
+  layer: feature
 
-y_train:
+train.y:
   type: pickle.PickleDataSet
   filepath: data/05_model_input/y_train.pkl
+  layer: model_input
 
-X_train:
+train.X:
   type: pickle.PickleDataSet
   filepath: data/05_model_input/X_train.pkl
+  layer: model_input
 
-y_test:
+test.y:
   type: pickle.PickleDataSet
   filepath: data/05_model_input/y_test.pkl
+  layer: model_input
 
-X_test:
+test.X:
   type: pickle.PickleDataSet
   filepath: data/05_model_input/X_test.pkl
+  layer: model_input
 
 scaler:
   type: pickle.PickleDataSet
-  filepath: data/06_models/scaler.pkl
+  filepath: data/05_model_input/scaler.pkl
+  layer: model_input
 
 clf:
   type: pickle.PickleDataSet
   filepath: data/06_models/clf.pkl
+  layer: models
 
-y_pred:
+test.y_pred:
   type: pickle.PickleDataSet
-  filepath: data/07_model_output/y_pred.pkl
+  filepath: data/07_model_output/y_pred_test.pkl
+  layer: model_output
 
-op_table:
+train.y_pred:
+  type: pickle.PickleDataSet
+  filepath: data/07_model_output/y_pred_train.pkl
+  layer: model_output
+
+test.op_table:
   type: plotly.JSONDataSet
-  filepath: data/08_reporting/overall_performance_table.json
+  filepath: data/08_reporting/overall_performance_table_test.json
+  layer: reporting
+
+test.qp_table:
+  type: plotly.JSONDataSet
+  filepath: data/08_reporting/question_performance_table_test.json
+  layer: reporting
+
+train.op_table:
+  type: plotly.JSONDataSet
+  filepath: data/08_reporting/overall_performance_table_train.json
+  layer: reporting
+
+train.qp_table:
+  type: plotly.JSONDataSet
+  filepath: data/08_reporting/question_performance_table_train.json
+  layer: reporting

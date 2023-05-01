@@ -3,6 +3,7 @@ This is a boilerplate pipeline 'reporting'
 generated using Kedro 0.18.6
 """
 import numpy as np
+import pandas as pd
 from sklearn.metrics import f1_score, confusion_matrix, roc_auc_score
 import plotly.graph_objects as go
 
@@ -31,9 +32,35 @@ def overall_performance(y_test: np.ndarray, y_pred: np.ndarray) -> tuple[dict, g
     fig.update_layout(width=800, height=500)
     
     return metrics, fig
-    
-    
 
+
+def question_performance(y_test: np.ndarray, y_pred: np.ndarray) -> tuple[pd.DataFrame, go.Figure]:
+    
+    metrics = pd.DataFrame(
+        {       "question": [q for q in range(1,len(y_test)+1)],
+                "f1": [f1_score(y_test[q], y_pred[q]) for q in range (0, len(y_test))],
+               "roc_auc": [roc_auc_score(y_test[q], y_pred[q]) for q in range (0, len(y_test))],
+               "predicted_1s": [np.sum(y_pred[q])/ y_pred[q].size for q in range (0, len(y_test))],
+               "real_1s": [np.sum(y_test[q])/ y_test[q].size for q in range (0, len(y_test))]
+            }
+        )
+    
+    fig = go.Figure(data=[go.Table(
+            header=dict(values=list(metrics.columns),
+                        line_color='darkslategray',
+                        fill_color='lightskyblue',
+                        font=dict(color='black', family="Lato", size=14),
+                        align='left'),
+            cells=dict(values=list(metrics.to_numpy().round(4).T),
+                    line_color='darkslategray',
+                    fill_color='lightcyan',
+                    font=dict(color='black', family="Lato", size=14),
+                    align='left'))
+                    ])
+
+    fig.update_layout(width=800, height=500)
+    
+    return metrics, fig
 
 
 # def model_performance_metrics():

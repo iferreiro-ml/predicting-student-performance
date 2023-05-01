@@ -7,7 +7,7 @@ from kedro.pipeline import Pipeline, node, pipeline
 from .nodes import feature_engineering_by_question
 
 
-def create_pipeline(namespace: str = "train", **kwargs) -> Pipeline:
+def create_pipeline(dataset: str = "train", **kwargs) -> Pipeline:
 
     fe_pipeline =  Pipeline(
         [
@@ -21,7 +21,7 @@ def create_pipeline(namespace: str = "train", **kwargs) -> Pipeline:
 
     return pipeline(
         pipe=fe_pipeline,
-        namespace=f"{namespace}",
-        inputs={"events": f"{namespace}_data", "lk_question": "lk_question"},
-        outputs={"features_q": f"features_q_{namespace}"},
+        namespace=f"{dataset}_feature_engineering",
+        inputs={"events": f"{dataset}.events_data", "lk_question": "lk_question"},
+        outputs={"features_q": f"{dataset}.features_q"},
     )
