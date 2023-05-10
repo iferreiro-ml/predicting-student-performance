@@ -63,6 +63,9 @@ def question_performance(y_test: np.ndarray, y_pred: np.ndarray) -> tuple[pd.Dat
     return metrics, fig
 
 
+def track_params(split_options: dict, upsampling_seed: float) -> dict:
+    return {"test_size": split_options['test_size'], "split_seed": split_options['random_state'], "upsampling_seed": upsampling_seed}
+
 # def model_performance_metrics():
 #     for q in range(eval_df['question'].min(), eval_df['question'].max()+1):
 #         eval_df_q = eval_df[eval_df['question'] == q]

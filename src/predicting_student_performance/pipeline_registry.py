@@ -26,16 +26,20 @@ def register_pipelines() -> Dict[str, Pipeline]:
     classify_pipeline = mod.new_classify_pipeline("test")
     report_pipeline_test = rep.create_pipeline("test")
     report_pipeline_train = rep.create_pipeline("train")
+    param_tracking_pipeline = rep.new_param_track_pipeline()
 
     return {
         "rmu_all": train_rmu_pipeline + test_rmu_pipeline,
         "ing_without_rmu": train_event_features_pipeline + question_split_pipeline + train_test_split_pipeline,
         "full_ingestion": train_rmu_pipeline + test_rmu_pipeline + train_event_features_pipeline + question_split_pipeline + train_test_split_pipeline,
-        "__default__": train_rmu_pipeline + test_rmu_pipeline + train_event_features_pipeline + question_split_pipeline + train_test_split_pipeline +
+        "all": train_rmu_pipeline + test_rmu_pipeline + train_event_features_pipeline + question_split_pipeline + train_test_split_pipeline +
         train_fe_pipeline + test_fe_pipeline + train_pipeline + classify_pipeline + report_pipeline_test +
-        report_pipeline_train,
+        report_pipeline_train + param_tracking_pipeline,
+        "__default__": train_event_features_pipeline + question_split_pipeline + train_test_split_pipeline +
+        train_fe_pipeline + test_fe_pipeline + train_pipeline + classify_pipeline + report_pipeline_test +
+        report_pipeline_train + param_tracking_pipeline,
         "train_e2e": train_event_features_pipeline + question_split_pipeline + train_test_split_pipeline + train_fe_pipeline + test_fe_pipeline +
         train_pipeline,
         "modelling": train_pipeline + classify_pipeline,
-        "reporting": report_pipeline_test + report_pipeline_train
+        "reporting": report_pipeline_test + report_pipeline_train + param_tracking_pipeline
     }

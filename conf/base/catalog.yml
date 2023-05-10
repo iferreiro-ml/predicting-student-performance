@@ -124,6 +124,7 @@ test.qp_table:
   type: plotly.JSONDataSet
   filepath: data/08_reporting/question_performance_table_test.json
   layer: reporting
+  versioned: True
 
 train.op_table:
   type: plotly.JSONDataSet
@@ -134,3 +135,19 @@ train.qp_table:
   type: plotly.JSONDataSet
   filepath: data/08_reporting/question_performance_table_train.json
   layer: reporting
+  versioned: True
+
+train.overall_metrics:
+  type: tracking.MetricsDataSet
+  filepath: data/09_tracking/train_overall_metrics.json
+  layer: tracking
+
+test.overall_metrics:
+  type: tracking.MetricsDataSet
+  filepath: data/09_tracking/test_overall_metrics.json
+  layer: tracking
+
+tracked_parameters:
+  type: tracking.JSONDataSet
+  filepath: data/09_tracking/tracked_parameters.json
+  layer: tracking

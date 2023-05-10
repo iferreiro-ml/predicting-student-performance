@@ -4,7 +4,7 @@ generated using Kedro 0.18.6
 """
 
 from kedro.pipeline import Pipeline, node, pipeline
-from .nodes import overall_performance, question_performance
+from .nodes import overall_performance, question_performance, track_params
 
 
 def create_pipeline(dataset = "test", **kwargs) -> Pipeline:
@@ -34,4 +34,16 @@ def create_pipeline(dataset = "test", **kwargs) -> Pipeline:
         outputs  = dict(zip(
             [x for x in report_pipeline.outputs()],
             [f"{dataset}.{x}" for x in report_pipeline.outputs()]))
+    )
+
+def new_param_track_pipeline() -> Pipeline:
+    return pipeline(
+        [
+            node(
+                func=track_params,
+                inputs=["params:split_options", "params:upsampling_seed"],
+                outputs="tracked_parameters",
+                name="track_parameters",
+            )
+        ]
     )
